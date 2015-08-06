@@ -6,28 +6,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
-
-    private Button btnSubmit;
-    private TextView tvResult;
-    private EditText etfirst,etsecond,etamount;
+    Button btnSubmit;
+    TextView tvResult;
+    EditText etfirst,etsecond,etamount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-    private void init(){
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         tvResult = (TextView)findViewById(R.id.tvResult);
         etfirst = (EditText)findViewById(R.id.etFirst);
         etsecond = (EditText)findViewById(R.id.etSecond);
-        etsecond = (EditText)findViewById(R.id.etSecond);
+        etamount = (EditText)findViewById(R.id.etAmount);
         btnSubmit.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View view){
@@ -36,12 +34,22 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         String amount = etamount.getText().toString();
         switch(view.getId()){
             case R.id.btnSubmit:
-                int divide =  (Integer.parseInt(num2) / Integer.parseInt(num1)) +1;
-                int multiply = divide * Integer.parseInt(amount);
-                tvResult.setText(String.valueOf(multiply));
-                break;
+                if(etfirst.getText().toString().length()==0){
+                    Toast.makeText(getBaseContext(), "You did not enter a value for the first number", Toast.LENGTH_LONG).show();
+                }
+                else if(etsecond.getText().toString().length()==0){
+                    Toast.makeText(getBaseContext(), "You did not enter a value for the second number", Toast.LENGTH_LONG).show();
+                }
+                else if(etamount.getText().toString().length()==0){
+                    Toast.makeText(getBaseContext(), "You did not enter a value for the amount", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    double divide = (Double.parseDouble(num1) / Double.parseDouble(num2)) + 1;
+                    double multiply = divide * Integer.parseInt(amount);
+                    tvResult.setText(String.valueOf(multiply));
+                    break;
+                }
         }
     }
-
 
 }
